@@ -1,5 +1,7 @@
 const { select, input } = require("@inquirer/prompts");
 
+let goals = [];
+
 const createGoal = async () => {
 
     const goal = await input(
@@ -12,6 +14,13 @@ const createGoal = async () => {
         console.log("The goal cannot be empty.");
         return
     }
+
+    goals.push(
+        {
+            value: goal,
+            checked: false
+        }
+    )
 
 }
 
