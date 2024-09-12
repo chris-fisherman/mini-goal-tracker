@@ -81,6 +81,26 @@ const achievedGoals = async () => {
 
 }
 
+const openGoals = async () => {
+
+    const open = goals.filter((goal) => {
+        return goal.checked != true
+    })
+
+    if (open.length == 0) {
+        console.log("Congrats! There aren't open goals :)");
+        return
+    }
+
+    await select(
+        {
+            message: "Open goals:",
+            choices: [...open]
+        }
+    )
+
+}
+
 const main = async () => {
     
     while(true) {
@@ -101,6 +121,10 @@ const main = async () => {
                     value: "achieved"
                 },
                 {
+                    name: "Open goals",
+                    value: "open"
+                },
+                {
                     name: "Exit",
                     value: "exit"
                 }
@@ -116,6 +140,9 @@ const main = async () => {
                 break
             case "achieved":
                 await achievedGoals()
+                break
+            case "open":
+                await openGoals()
                 break
             case "exit":
                 console.log("See you later!")
