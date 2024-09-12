@@ -138,9 +138,15 @@ const deleteGoals = async () => {
 
 }
 
+const clearScreen = () => {
+    console.clear();
+}
+
 const main = async () => {
     
     while(true) {
+
+        clearScreen();
 
         const option = await select({
             message: "Choose an option >",
