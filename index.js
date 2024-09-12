@@ -101,6 +101,43 @@ const openGoals = async () => {
 
 }
 
+const deleteGoals = async () => {
+
+    const unselectedGoals = goals.map((goal) => {
+        return {
+            value: goal.value,
+            checked: false
+        }
+    })
+
+    if(unselectedGoals.length == 0) {
+        console.log("No goals to delete.")
+        return
+    }
+
+    const itemsToDelete = await checkbox(
+        {
+            message: "Select item(s) to delete",
+            choices: [...unselectedGoals],
+            instructions: false
+        }
+    )
+
+    if(itemsToDelete.length == 0) {
+        console.log("No item(s) to delete.")
+        return
+    }
+
+    itemsToDelete.forEach((item) => {
+        goals = goals.filter((goal) => {
+            return goal.value != item
+        })
+    })
+
+    console.log("Item(s) successfully removed.")
+
+}
+
 const main = async () => {
     
     while(true) {
@@ -125,6 +162,10 @@ const main = async () => {
                     value: "open"
                 },
                 {
+                    name: "Delete goals",
+                    value: "delete"
+                },
+                {
                     name: "Exit",
                     value: "exit"
                 }
@@ -143,6 +184,9 @@ const main = async () => {
                 break
             case "open":
                 await openGoals()
+                break
+            case "delete":
+                await deleteGoals()
                 break
             case "exit":
                 console.log("See you later!")
