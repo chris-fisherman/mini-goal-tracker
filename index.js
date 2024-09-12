@@ -38,19 +38,15 @@ const listGoals = async () => {
             }
         )
 
-        if(answers.length == 0) {
-            console.log("No goal was selected.");
-
-            goals.forEach((g) => {
-                g.checked = false;
-            })
-            
-            return
-        }
-
         goals.forEach((g) => {
             g.checked = false;
         })
+
+        if(answers.length == 0) {
+            console.log("No goal was selected.");
+            
+            return
+        }
     
         answers.forEach((answer) => {
             const goal = goals.find((g) => {
