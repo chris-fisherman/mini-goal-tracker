@@ -1,4 +1,19 @@
-const { select } = require("@inquirer/prompts");
+const { select, input } = require("@inquirer/prompts");
+
+const createGoal = async () => {
+
+    const goal = await input(
+        {
+            message: "Type a goal:"
+        }
+    );
+
+    if(goal.length == 0) {
+        console.log("The goal cannot be empty.");
+        return
+    }
+
+}
 
 const start = async () => {
     
@@ -8,8 +23,8 @@ const start = async () => {
             message: "Choose an option >",
             choices: [
                 {
-                    name: "Track goal",
-                    value: "track"
+                    name: "Create goal",
+                    value: "create"
                 },
                 {
                     name: "List goals",
@@ -23,8 +38,8 @@ const start = async () => {
         });
 
         switch(option) {
-            case "track":
-                console.log("Let's track")
+            case "create":
+                await createGoal()
                 break
             case "list":
                 console.log("Let's list")
