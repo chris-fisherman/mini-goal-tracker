@@ -65,7 +65,7 @@ const listGoals = async () => {
 
 }
 
-const start = async () => {
+const main = async () => {
     
     while(true) {
 
@@ -103,4 +103,4 @@ const start = async () => {
 
 }
 
-start();
+main();
