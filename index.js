@@ -1,5 +1,7 @@
 const { select, input, checkbox } = require("@inquirer/prompts");
 
+let message = "Welcome to Mini Goal Tracker App!";
+
 let goals = [];
 
 const createGoal = async () => {
@@ -11,7 +13,7 @@ const createGoal = async () => {
     );
 
     if(goal.length == 0) {
-        console.log("The goal cannot be empty.");
+        message = "The goal cannot be empty.";
         return
     }
 
@@ -22,12 +24,14 @@ const createGoal = async () => {
         }
     )
 
+    message = "Goal created successfully.";
+
 }
 
 const listGoals = async () => {
 
     if(goals.length == 0) {
-        console.log("The list is empty.");
+        message = "The list is empty.";
         return
     }
 
@@ -44,7 +48,7 @@ const listGoals = async () => {
     })
 
     if(answers.length == 0) {
-        console.log("No goal was selected.");
+        message = "No goal was selected.";
         
         return
     }
@@ -57,7 +61,7 @@ const listGoals = async () => {
         goal.checked = true;
     })
 
-    console.log("Goal(s) successfully checked.");
+    message = "Goal(s) successfully checked.";
 
 }
 
@@ -68,7 +72,7 @@ const achievedGoals = async () => {
     })
 
     if (achieved.length == 0) {
-        console.log("There aren't achieved goals :(");
+        message = "There aren't achieved goals :(";
         return
     }
 
@@ -88,7 +92,7 @@ const openGoals = async () => {
     })
 
     if (open.length == 0) {
-        console.log("Congrats! There aren't open goals :)");
+        message = "Congrats! There aren't open goals :)";
         return
     }
 
@@ -111,7 +115,7 @@ const deleteGoals = async () => {
     })
 
     if(unselectedGoals.length == 0) {
-        console.log("No goals to delete.")
+        message = "No goals to delete.";
         return
     }
 
@@ -124,7 +128,7 @@ const deleteGoals = async () => {
     )
 
     if(itemsToDelete.length == 0) {
-        console.log("No item(s) to delete.")
+        message = "No item(s) to delete.";
         return
     }
 
@@ -134,12 +138,18 @@ const deleteGoals = async () => {
         })
     })
 
-    console.log("Item(s) successfully removed.")
+    message = "Item(s) successfully removed.";
 
 }
 
 const clearScreen = () => {
     console.clear();
+
+    if(message != "") {
+        console.log(message);
+        console.log("");
+        message = "";
+    }
 }
 
 const main = async () => {
