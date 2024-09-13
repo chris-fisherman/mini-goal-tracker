@@ -79,7 +79,7 @@ const listGoals = async () => {
         goal.checked = true;
     })
 
-    message = "Goal(s) successfully checked.";
+    message = "Goal(s) successfully selected.";
 
 }
 
@@ -101,6 +101,8 @@ const achievedGoals = async () => {
         }
     )
 
+    message = "Achieved goals checked.";
+
 }
 
 const openGoals = async () => {
@@ -120,6 +122,8 @@ const openGoals = async () => {
             choices: [...open]
         }
     )
+
+    message = "Open goals checked.";
 
 }
 
@@ -164,8 +168,9 @@ const clearScreen = () => {
     console.clear();
 
     if(message != "") {
+        console.log("-------------------------------------");
         console.log(message);
-        console.log("");
+        console.log("-------------------------------------");
         message = "";
     }
 }
