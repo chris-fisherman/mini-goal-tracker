@@ -1,10 +1,12 @@
+// inquirer library
 const { select, input, checkbox } = require("@inquirer/prompts")
-const fs = require("fs").promises
+const fs = require("fs").promises // fs 'file system' used to loading and saving
 
+// main variables
 let message = "Welcome to Mini Goal Tracker App!"
-
 let goals
 
+// load
 const loadGoals = async () => {
     try {
         const data = await fs.readFile("goals.json", "utf-8")
@@ -13,11 +15,12 @@ const loadGoals = async () => {
         goals = []
     }
 }
-
+// save
 const saveGoals = async () => {
     await fs.writeFile("goals.json", JSON.stringify(goals, null, 2))
 }
 
+// create
 const createGoal = async () => {
     const goal = await input(
         {
@@ -39,7 +42,7 @@ const createGoal = async () => {
 
     message = "Goal created successfully."
 }
-
+// list
 const listGoals = async () => {
     if(goals.length == 0) {
         message = "The list is empty."
@@ -73,7 +76,7 @@ const listGoals = async () => {
 
     message = "Goal(s) successfully selected."
 }
-
+// achieved
 const achievedGoals = async () => {
     const achieved = goals.filter((goal) => {
         return goal.checked
@@ -93,7 +96,7 @@ const achievedGoals = async () => {
 
     message = "Achieved goals checked."
 }
-
+// open
 const openGoals = async () => {
     const open = goals.filter((goal) => {
         return goal.checked != true
@@ -113,7 +116,7 @@ const openGoals = async () => {
 
     message = "Open goals checked."
 }
-
+// delete
 const deleteGoals = async () => {
     const unselectedGoals = goals.map((goal) => {
         return {
@@ -149,6 +152,7 @@ const deleteGoals = async () => {
     message = "Item(s) successfully removed."
 }
 
+// clear screen
 const clearScreen = () => {
     console.clear()
 
@@ -160,6 +164,7 @@ const clearScreen = () => {
     }
 }
 
+// #region MAIN
 const main = async () => {
 
     await loadGoals()
