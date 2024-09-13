@@ -16,6 +16,12 @@ const loadGoals = async () => {
 
 }
 
+const saveGoals = async () => {
+
+    await fs.writeFile("goals.json", JSON.stringify(goals, null, 2));
+
+}
+
 const createGoal = async () => {
 
     const goal = await input(
@@ -166,11 +172,13 @@ const clearScreen = () => {
 
 const main = async () => {
 
-    loadGoals();
+    await loadGoals();
     
     while(true) {
 
         clearScreen();
+
+        await saveGoals();
 
         const option = await select({
             message: "Choose an option >",
