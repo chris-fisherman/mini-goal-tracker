@@ -1,37 +1,32 @@
-const { select, input, checkbox } = require("@inquirer/prompts");
-const fs = require("fs").promises;
+const { select, input, checkbox } = require("@inquirer/prompts")
+const fs = require("fs").promises
 
-let message = "Welcome to Mini Goal Tracker App!";
+let message = "Welcome to Mini Goal Tracker App!"
 
-let goals;
+let goals
 
 const loadGoals = async () => {
-
     try {
-        const data = await fs.readFile("goals.json", "utf-8");
-        goals = JSON.parse(data);
+        const data = await fs.readFile("goals.json", "utf-8")
+        goals = JSON.parse(data)
     } catch (error) {
-        goals = [];
+        goals = []
     }
-
 }
 
 const saveGoals = async () => {
-
-    await fs.writeFile("goals.json", JSON.stringify(goals, null, 2));
-
+    await fs.writeFile("goals.json", JSON.stringify(goals, null, 2))
 }
 
 const createGoal = async () => {
-
     const goal = await input(
         {
             message: "Type a goal:"
         }
-    );
+    )
 
     if(goal.length == 0) {
-        message = "The goal cannot be empty.";
+        message = "The goal cannot be empty."
         return
     }
 
@@ -42,14 +37,12 @@ const createGoal = async () => {
         }
     )
 
-    message = "Goal created successfully.";
-
+    message = "Goal created successfully."
 }
 
 const listGoals = async () => {
-
     if(goals.length == 0) {
-        message = "The list is empty.";
+        message = "The list is empty."
         return
     }
 
@@ -62,12 +55,11 @@ const listGoals = async () => {
     )
 
     goals.forEach((g) => {
-        g.checked = false;
+        g.checked = false
     })
 
     if(answers.length == 0) {
-        message = "No goal was selected.";
-        
+        message = "No goal was selected."
         return
     }
 
@@ -76,21 +68,19 @@ const listGoals = async () => {
             return g.value == answer
         })
 
-        goal.checked = true;
+        goal.checked = true
     })
 
-    message = "Goal(s) successfully selected.";
-
+    message = "Goal(s) successfully selected."
 }
 
 const achievedGoals = async () => {
-
     const achieved = goals.filter((goal) => {
         return goal.checked
     })
 
     if (achieved.length == 0) {
-        message = "There aren't achieved goals :(";
+        message = "There aren't achieved goals :("
         return
     }
 
@@ -101,18 +91,16 @@ const achievedGoals = async () => {
         }
     )
 
-    message = "Achieved goals checked.";
-
+    message = "Achieved goals checked."
 }
 
 const openGoals = async () => {
-
     const open = goals.filter((goal) => {
         return goal.checked != true
     })
 
     if (open.length == 0) {
-        message = "Congrats! There aren't open goals :)";
+        message = "Congrats! There aren't open goals :)"
         return
     }
 
@@ -123,12 +111,10 @@ const openGoals = async () => {
         }
     )
 
-    message = "Open goals checked.";
-
+    message = "Open goals checked."
 }
 
 const deleteGoals = async () => {
-
     const unselectedGoals = goals.map((goal) => {
         return {
             value: goal.value,
@@ -137,7 +123,7 @@ const deleteGoals = async () => {
     })
 
     if(unselectedGoals.length == 0) {
-        message = "No goals to delete.";
+        message = "No goals to delete."
         return
     }
 
@@ -150,7 +136,7 @@ const deleteGoals = async () => {
     )
 
     if(itemsToDelete.length == 0) {
-        message = "No item(s) to delete.";
+        message = "No item(s) to delete."
         return
     }
 
@@ -160,30 +146,29 @@ const deleteGoals = async () => {
         })
     })
 
-    message = "Item(s) successfully removed.";
-
+    message = "Item(s) successfully removed."
 }
 
 const clearScreen = () => {
-    console.clear();
+    console.clear()
 
     if(message != "") {
-        console.log("-------------------------------------");
-        console.log(message);
-        console.log("-------------------------------------");
-        message = "";
+        console.log("-------------------------------------")
+        console.log(message)
+        console.log("-------------------------------------")
+        message = ""
     }
 }
 
 const main = async () => {
 
-    await loadGoals();
+    await loadGoals()
     
     while(true) {
 
-        clearScreen();
+        clearScreen()
 
-        await saveGoals();
+        await saveGoals()
 
         const option = await select({
             message: "Choose an option >",
@@ -213,7 +198,7 @@ const main = async () => {
                     value: "exit"
                 }
             ]
-        });
+        })
 
         switch(option) {
             case "create":
@@ -240,4 +225,4 @@ const main = async () => {
 
 }
 
-main();
+main()
