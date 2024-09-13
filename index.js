@@ -1,8 +1,20 @@
 const { select, input, checkbox } = require("@inquirer/prompts");
+const fs = require("fs").promises;
 
 let message = "Welcome to Mini Goal Tracker App!";
 
-let goals = [];
+let goals;
+
+const loadGoals = async () => {
+
+    try {
+        const data = await fs.readFile("goals.json", "utf-8");
+        goals = JSON.parse(data);
+    } catch (error) {
+        goals = [];
+    }
+
+}
 
 const createGoal = async () => {
 
@@ -153,6 +165,8 @@ const clearScreen = () => {
 }
 
 const main = async () => {
+
+    loadGoals();
     
     while(true) {
 
